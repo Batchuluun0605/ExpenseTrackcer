@@ -4,15 +4,25 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import Geld from "@/components/Geld";
 import Alert from "@/components/Alert";
-const API = "http://localhost:8000/users/oneuser";
+import nookies, { setCookie } from "nookies";
+const API = process.env.NEXT_PUBLIC_NEON_CONNECTION;
 export default function LogIn() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const handleLogIn = async () => {
-    const res = await axios.post(API, { email: email, password: password });
+    const res = await axios.post(`${API}/users/1`, {
+      email: email,
+      password: password,
+    });
     const user = res.data;
-    localStorage.setItem("id", JSON.stringify(user));
+    setCookie(null, "id", user.id, {
+      maxAge: 3600,
+    });
+    setCookie(null, "email", user.email, {
+      maxAge: 3600,
+    });
+    // localStorage.setItem("id", JSON.stringify(user));
     if (user && (user.id || user.email)) {
       router.push(`/dashboard/${user.email}`);
     } else {

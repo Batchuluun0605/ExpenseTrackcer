@@ -1,12 +1,14 @@
 import { useState } from "react";
 import axios from "axios";
 import { CategoryImgData } from "./CategoryImg";
+import { parseCookies } from "nookies";
 const api = "http://localhost:8000/categorys";
 
 export default function AddCategoryInput({ closeCategoryModal }) {
   const [name, setName] = useState("");
   const [open, setOpen] = useState(false);
-  const user = JSON.parse(localStorage.getItem("id"));
+  const cookies = parseCookies();
+  const id = cookies.id;
   const handleCloseModal = () => {
     setOpen(false);
   };
@@ -14,7 +16,7 @@ export default function AddCategoryInput({ closeCategoryModal }) {
     let res = await axios.post(api, {
       name: name,
       description: "",
-      user_id: user.id,
+      user_id: id,
     });
     handleCloseModal();
   };
@@ -30,7 +32,16 @@ export default function AddCategoryInput({ closeCategoryModal }) {
         <span className="text-blue-300">+</span> Add category
       </button>
       {open && (
-        <div className=" bg-slate-200 p-4 mt-[8px]  ">
+        <div className=" bg-slate-200 p-4 mt-[8px] flex flex-col gap-2  ">
+          <div className="flex justify-between ">
+            <button
+              onClick={handleCloseModal}
+              className=" flex justify-center items-center border-solid rounded-xl bg-black text-white w-6 h-6 p-1"
+            >
+              x
+            </button>
+          </div>
+
           <input
             type="text"
             value={name}

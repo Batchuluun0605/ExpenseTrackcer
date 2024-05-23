@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { parseCookies } from "nookies";
 export default function AddCard() {
   const [exActive, setExActive] = useState(false);
   const [activeButton, setActiveButton] = useState(false);
@@ -7,9 +8,10 @@ export default function AddCard() {
   const [description, setDescription] = useState("");
   const [name, setName] = useState("");
   const [data, setData] = useState([]);
-  const user = JSON.parse(localStorage.getItem("id"));
+  const cookies = parseCookies();
+  const id = cookies.id;
   const api = "http://localhost:8000/transactions";
-  const categoryApi = `http://localhost:8000/categorys?user_id=${user.id}`;
+  const categoryApi = `http://localhost:8000/categorys?user_id=${id}`;
   const handler = async () => {
     const res = await axios.get(categoryApi);
     setData(res.data);
@@ -22,7 +24,7 @@ export default function AddCard() {
   const handlerRecord = async () => {
     try {
       const response = await axios.post(api, {
-        user_id: user.id,
+        user_id: id,
         name: name,
         amount: exActive === true ? amount : -amount,
         transaction_type: exActive ? "EXP" : "INC",
@@ -38,7 +40,7 @@ export default function AddCard() {
   };
   useEffect(() => {
     handler();
-  }, [name]);
+  }, [handlerRecord]);
   return (
     <div className="">
       <button
@@ -130,13 +132,15 @@ export default function AddCard() {
                     />
                   </div>
                 </div>
-                <button
-                  className="rounded-xl btn-ghost py-2"
-                  style={{ background: activeButton ? "green" : "red" }}
-                  onClick={handlerRecord}
-                >
-                  Add Record
-                </button>
+                <form method="dialog">
+                  <button
+                    className="rounded-xl btn-ghost py-2"
+                    style={{ background: activeButton ? "green" : "red" }}
+                    onClick={handlerRecord}
+                  >
+                    Add Record
+                  </button>
+                </form>
               </div>
               <div className="w-1/2 flex flex-col gap-3">
                 <p>Payee</p>

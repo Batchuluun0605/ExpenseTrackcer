@@ -1,11 +1,12 @@
 import HomeIcon from "@/icon/Home";
 import axios from "axios";
+import { parseCookies } from "nookies";
 import { useEffect, useState } from "react";
 
 export default function RecordSection({ input, filter }) {
-  const get = localStorage.getItem("id");
-  const userId = JSON.parse(get);
-  const apiUrl = `http://localhost:8000/transactions?user_id=${userId.id}`;
+  const cookies = parseCookies();
+  const id = cookies.id;
+  const apiUrl = `http://localhost:8000/transactions?user_id=${id}`;
   const [data, setData] = useState([]);
   const handler = async () => {
     const res = await axios.get(apiUrl);
@@ -27,7 +28,7 @@ export default function RecordSection({ input, filter }) {
       return e;
     }
   });
-  const start = filterData.length <= 8 ? 0 : filterData.length - 8;
+  const start = filterData.length <= 10 ? 0 : filterData.length - 10;
   return (
     <div className="flex flex-col gap-3 rounded-3xl">
       {filterData.slice(start, filterData.length).map((el, ind) => {

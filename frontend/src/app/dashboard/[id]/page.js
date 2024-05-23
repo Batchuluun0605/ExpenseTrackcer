@@ -13,6 +13,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import { parseCookies } from "nookies";
 Chartjs.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 export default function DashBoard() {
   const data = {
@@ -35,9 +36,11 @@ export default function DashBoard() {
       },
     ],
   };
+  const cookies = parseCookies();
+  const email = cookies.email;
   const option = {};
   return (
-    <div className=" bg-white h-full">
+    <div className=" bg-white h-full" id={`/dashboard/${email}`}>
       <div className=" bg-white m-auto">
         <Navbar />
         <div className=" bg-slate-200">

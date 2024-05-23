@@ -1,9 +1,11 @@
 import Eye from "@/icon/Eye";
 import Leading from "@/icon/Leading";
 import axios from "axios";
+import { parseCookies } from "nookies";
 import { useEffect, useState } from "react";
-const user = JSON.parse(localStorage.getItem("id"));
-const apiUrl = `http://localhost:8000/categorys?user_id=${user.id}`;
+const cookies = parseCookies();
+const id = cookies.id;
+const apiUrl = `http://localhost:8000/categorys?user_id=${id}`;
 
 const CategoryNameData = () => {
   const [data, setData] = useState([]);

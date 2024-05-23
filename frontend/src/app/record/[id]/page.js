@@ -8,9 +8,11 @@ import Leading from "@/icon/Leading";
 import Left from "@/icon/LeftIcon";
 import Right from "@/icon/RightIcon";
 import axios from "axios";
+import { parseCookies } from "nookies";
 import { useEffect, useState } from "react";
-const userId = JSON.parse(localStorage.getItem("id"));
-const transactionApi = `http://localhost:8000/categorys?user_id=${userId.id}`;
+const cookies = parseCookies();
+const id = cookies.id;
+const transactionApi = `http://localhost:8000/categorys?user_id=${id}`;
 export default function Record() {
   const typesData = [
     {

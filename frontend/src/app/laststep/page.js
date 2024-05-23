@@ -5,14 +5,17 @@ import Geld from "@/components/Geld";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import Button1 from "@/components/Button1";
-const api = "http://localhost:8000/users/1";
+import dotenv from "dotenv";
+
+dotenv.config();
+const api = process.env.NEXT_PUBLIC_NEON_CONNECTION;
 
 export default function Step() {
   const router = useRouter();
   const data = JSON.parse(localStorage.getItem("data"));
   const handlerName = async () => {
     try {
-      let res = await axios.post(api, {
+      let res = await axios.post(`${api}users/1`, {
         name: data.name,
         email: data.email,
         password: data.password,
