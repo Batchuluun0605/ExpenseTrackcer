@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Geld from "@/components/Geld";
 import Alert from "@/components/Alert";
 import Button1 from "@/components/Button1";
+import { setCookie } from "nookies";
 const API = process.env.NEXT_PUBLIC_NEON_CONNECTION;
 export default function LogIn() {
   const router = useRouter();
@@ -12,7 +13,7 @@ export default function LogIn() {
   const [password, setPassword] = useState("");
   const handleLogIn = async () => {
     try {
-      const res = await axios.post(`${API}/users/1`, {
+      const res = await axios.post(`${API}users/oneuser`, {
         email: email,
         password: password,
       });

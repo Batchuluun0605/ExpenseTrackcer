@@ -11,18 +11,18 @@ export default function LogIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const handleLogIn = async () => {
-    const res = await axios.post(`${API}/users/1`, {
+    const res = await axios.post(`${API}users/oneuser`, {
       email: email,
       password: password,
     });
     const user = res.data;
+
     setCookie(null, "id", user.id, {
       maxAge: 3600,
     });
     setCookie(null, "email", user.email, {
       maxAge: 3600,
     });
-    // localStorage.setItem("id", JSON.stringify(user));
     if (user && (user.id || user.email)) {
       router.push(`/dashboard/${user.email}`);
     } else {

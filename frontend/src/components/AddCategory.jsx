@@ -2,7 +2,9 @@ import { useState } from "react";
 import axios from "axios";
 import { CategoryImgData } from "./CategoryImg";
 import { parseCookies } from "nookies";
-const api = "http://localhost:8000/categorys";
+import dotenv from "dotenv";
+dotenv.config();
+const api = process.env.NEXT_PUBLIC_NEON_CONNECTION;
 
 export default function AddCategoryInput({ closeCategoryModal }) {
   const [name, setName] = useState("");
@@ -13,7 +15,7 @@ export default function AddCategoryInput({ closeCategoryModal }) {
     setOpen(false);
   };
   const handlerInput = async () => {
-    let res = await axios.post(api, {
+    let res = await axios.post(`${api}categorys`, {
       name: name,
       description: "",
       user_id: id,

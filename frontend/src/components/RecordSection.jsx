@@ -2,14 +2,15 @@ import HomeIcon from "@/icon/Home";
 import axios from "axios";
 import { parseCookies } from "nookies";
 import { useEffect, useState } from "react";
-
+import dotenv from "dotenv";
+dotenv.config();
+const transactionApi = process.env.NEXT_PUBLIC_NEON_CONNECTION;
 export default function RecordSection({ input, filter }) {
   const cookies = parseCookies();
   const id = cookies.id;
-  const apiUrl = `http://localhost:8000/transactions?user_id=${id}`;
   const [data, setData] = useState([]);
   const handler = async () => {
-    const res = await axios.get(apiUrl);
+    const res = await axios.get(`${transactionApi}transactions?user_id=${id}`);
     setData(res.data);
   };
   useEffect(() => {

@@ -10,9 +10,13 @@ import Right from "@/icon/RightIcon";
 import axios from "axios";
 import { parseCookies } from "nookies";
 import { useEffect, useState } from "react";
+import dotenv from "dotenv";
+dotenv.config();
 const cookies = parseCookies();
 const id = cookies.id;
-const transactionApi = `http://localhost:8000/categorys?user_id=${id}`;
+const transactionApi = process.env.NEXT_PUBLIC_NEON_CONNECTION;
+//localhost:8000/categorys?user_id=${id}
+
 export default function Record() {
   const typesData = [
     {
@@ -32,7 +36,7 @@ export default function Record() {
   const [input, setInput] = useState("");
   const [filter, setFilter] = useState("");
   const search = async () => {
-    const res = await axios.get(transactionApi);
+    const res = await axios.get(`${transactionApi}categorys?user_id=${id}`);
     localStorage.setItem("alldata", JSON.stringify(res.data));
   };
 

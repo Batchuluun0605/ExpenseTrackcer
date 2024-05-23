@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { parseCookies } from "nookies";
+import dotenv from "dotenv";
+dotenv.config();
 export default function AddCard() {
   const [exActive, setExActive] = useState(false);
   const [activeButton, setActiveButton] = useState(false);
@@ -10,10 +12,11 @@ export default function AddCard() {
   const [data, setData] = useState([]);
   const cookies = parseCookies();
   const id = cookies.id;
-  const api = "http://localhost:8000/transactions";
-  const categoryApi = `http://localhost:8000/categorys?user_id=${id}`;
+
+  const api = process.env.NEXT_PUBLIC_NEON_CONNECTION;
+  const categoryApi = process.env.NEXT_PUBLIC_NEON_CONNECTION;
   const handler = async () => {
-    const res = await axios.get(categoryApi);
+    const res = await axios.get(`${categoryApi}categorys?user_id=${id}`);
     setData(res.data);
   };
 
@@ -23,7 +26,7 @@ export default function AddCard() {
   };
   const handlerRecord = async () => {
     try {
-      const response = await axios.post(api, {
+      const response = await axios.post(`${api}transactions`, {
         user_id: id,
         name: name,
         amount: exActive === true ? amount : -amount,
