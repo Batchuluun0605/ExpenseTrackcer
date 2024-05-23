@@ -7,6 +7,7 @@ import category from "./src/router/category.js";
 import transaction from "./src/router/transaction.js";
 
 dotenv.config();
+pool.connect();
 const PORT = process.env.PORT || 8000;
 const app = express();
 app.use(cors({ origin: "*" }));
