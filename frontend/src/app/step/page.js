@@ -5,17 +5,14 @@ import Geld from "@/components/Geld";
 import Money from "@/icon/Money";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { setCookie } from "nookies";
 import { useRef, useState } from "react";
 const api = "http://localhost:8000/users";
 export default function Step() {
   const router = useRouter();
   const [currency, setCurrens] = useState("");
   const laststep = () => {
-    let data = JSON.parse(localStorage.getItem("data"));
-    localStorage.setItem(
-      "data",
-      JSON.stringify({ ...data, currency_type: currency })
-    );
+    setCookie(null, "curr", currency);
     router.push("/laststep");
   };
   return (

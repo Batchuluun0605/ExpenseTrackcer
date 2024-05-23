@@ -67,9 +67,9 @@ export default function LogIn() {
               Don’t have account?{" "}
               <span
                 className=" text-blue-800 cursor-pointer"
-                onClick={() => router.push("/signin")}
+                onClick={() => router.push("/signUp")}
               >
-                Sign in
+                Sign up
               </span>
             </p>
           </div>

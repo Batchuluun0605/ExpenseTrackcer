@@ -5,19 +5,19 @@ import Geld from "@/components/Geld";
 import { useRouter } from "next/navigation";
 import Button from "@/components/Button";
 import Button1 from "@/components/Button1";
+import { setCookie } from "nookies";
 const api = "http://localhost:8000/";
 export default function SignIn() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
-  if (localStorage.getItem("data") == null) {
-    localStorage.setItem("data", "[]");
-  }
   const keys = { name, email, password };
   const step = () => {
     router.push("/step");
-    localStorage.setItem("data", JSON.stringify(keys));
+    setCookie(null, "name", name);
+    setCookie(null, "userEmail", email);
+    setCookie(null, "password", password);
   };
 
   return (

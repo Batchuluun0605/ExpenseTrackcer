@@ -37,7 +37,6 @@ export default function Record() {
   const [filter, setFilter] = useState("");
   const search = async () => {
     const res = await axios.get(`${transactionApi}categorys?user_id=${id}`);
-    localStorage.setItem("alldata", JSON.stringify(res.data));
   };
 
   useEffect(() => {

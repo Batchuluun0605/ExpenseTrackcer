@@ -6,20 +6,25 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import Button1 from "@/components/Button1";
 import dotenv from "dotenv";
+import { parseCookies } from "nookies";
 
 dotenv.config();
 const api = process.env.NEXT_PUBLIC_NEON_CONNECTION;
 
 export default function Step() {
   const router = useRouter();
-  const data = JSON.parse(localStorage.getItem("data"));
+  const cookies = parseCookies();
+  const name = cookies.name;
+  const email = cookies.userEmail;
+  const curr = cookies.curr;
+  const password = cookies.password;
   const handlerName = async () => {
     try {
       let res = await axios.post(`${api}users/1`, {
-        name: data.name,
-        email: data.email,
-        password: data.password,
-        currency_type: data.currency_type,
+        name: name,
+        email: email,
+        password: password,
+        currency_type: curr,
       });
       router.push("/login");
     } catch (error) {
@@ -33,7 +38,7 @@ export default function Step() {
           <Geld />
         </div>
         <div>
-          <ul class="steps">
+          <ul className="steps">
             <li className="step step-primary">Currency</li>
 
             <li className="step step-primary">Finish</li>

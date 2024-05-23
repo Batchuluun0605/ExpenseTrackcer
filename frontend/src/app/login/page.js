@@ -67,7 +67,7 @@ export default function LogIn() {
                 className=" text-blue-800 cursor-pointer"
                 onClick={() => router.push("/signUp")}
               >
-                Sign in
+                Sign up
               </span>
             </p>
           </div>
